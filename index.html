@@ -3,117 +3,262 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Commandes T-shirts & Sweats — Établissement</title>
-  <!-- SDK Firebase (Compat pour fichier HTML autonome sans bundler) -->
+  <title>Boutique Établissement — T-shirts & Sweats</title>
+  <!-- Police moderne Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- SDK Firebase (Compat autonome) -->
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
   <style>
     :root {
-      --bg: #f4f6f9;
+      --bg: #f1f5f9;
       --surface: #ffffff;
-      --border: #d0d7de;
-      --border-light: #e5e9f0;
-      --text: #1f2328;
-      --muted: #57606a;
-      --primary: #0969da;
-      --primary-hover: #0550ae;
-      --green-bg: #dafbe1;
-      --green-text: #1a7f37;
-      --orange-bg: #fff8c5;
-      --orange-text: #9a6700;
-      --blue-bg: #ddf4ff;
-      --blue-text: #0969da;
-      --purple-bg: #fbefff;
-      --purple-text: #8250df;
-      --danger: #cf222e;
+      --surface-subtle: #f8fafc;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --text: #0f172a;
+      --text-secondary: #475569;
+      --muted: #64748b;
+      
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #eff6ff;
+      
+      --indigo: #4f46e5;
+      --indigo-light: #eef2ff;
+      
+      --emerald: #059669;
+      --emerald-light: #ecfdf5;
+      --emerald-border: #a7f3d0;
+
+      --teal: #0d9488;
+      --teal-light: #f0fdfa;
+      
+      --amber: #d97706;
+      --amber-light: #fffbeb;
+      --amber-border: #fde68a;
+      
+      --rose: #e11d48;
+      --rose-light: #fff1f2;
+
+      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+      --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
     }
 
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--text);
       font-size: 14px;
-      line-height: 1.4;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .container {
-      max-width: 1280px;
+    /* Bandeau supérieur */
+    .hero-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #2563eb 100%);
+      color: #ffffff;
+      padding: 20px 16px 48px 16px;
+    }
+    .hero-inner {
+      max-width: 1360px;
       margin: 0 auto;
-      padding: 16px;
-    }
-
-    /* En-tête & statut Firebase */
-    .topbar {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px 16px;
-      margin-bottom: 12px;
+      gap: 16px;
     }
-    .topbar h1 {
+    .brand-block {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .hero-title {
       margin: 0;
-      font-size: 18px;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .price-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 5px;
+    }
+    .price-pill {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 2px 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+    .price-pill strong {
+      color: #ffffff;
       font-weight: 700;
+    }
+    .price-pill .marge-tag {
+      color: #6ee7b7;
+      font-weight: 600;
+    }
+
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
     }
     .sync-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
+      gap: 7px;
+      padding: 6px 12px;
       border-radius: 999px;
       font-size: 12px;
       font-weight: 600;
-      background: var(--orange-bg);
-      color: var(--orange-text);
-      border: 1px solid rgba(154,103,0,0.2);
+      background: rgba(245, 158, 11, 0.2);
+      color: #fde68a;
+      border: 1px solid rgba(253, 230, 138, 0.35);
     }
     .sync-badge.online {
-      background: var(--green-bg);
-      color: var(--green-text);
-      border-color: rgba(26,127,55,0.2);
+      background: rgba(16, 185, 129, 0.2);
+      color: #a7f3d0;
+      border-color: rgba(167, 243, 208, 0.35);
     }
     .sync-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background: currentColor;
+      box-shadow: 0 0 8px currentColor;
+    }
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.24);
     }
 
-    /* Résumé financier rapide */
+    /* Conteneur principal remonté sur le bandeau */
+    .container {
+      max-width: 1360px;
+      margin: -30px auto 32px auto;
+      padding: 0 16px;
+    }
+
+    /* Cartes de statistiques (5 colonnes adaptatives) */
     .stats-bar {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-      margin-bottom: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
     }
     .stat-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px 14px;
+      border-radius: 12px;
+      padding: 14px 15px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--accent, var(--primary));
+    }
+    .stat-card.highlight-profit {
+      background: linear-gradient(180deg, #ffffff 0%, #f0fdfa 100%);
+      border-color: #99f6e4;
     }
     .stat-label {
       font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
       color: var(--muted);
-      font-weight: 600;
+      font-weight: 700;
     }
     .stat-value {
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
       margin-top: 2px;
+      color: var(--text);
     }
     .stat-sub {
-      font-size: 11px;
-      color: var(--muted);
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      margin-top: 3px;
+      line-height: 1.35;
+    }
+    .stat-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+      background: var(--icon-bg, var(--primary-light));
+    }
+    .progress-track {
+      width: 100%;
+      height: 5px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--emerald);
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    /* Carte principale Tableur */
+    .main-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      margin-bottom: 24px;
     }
 
     /* Barre d'actions rapides */
@@ -122,17 +267,15 @@
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
+      padding: 14px 16px;
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-bottom: none;
-      border-radius: 8px 8px 0 0;
-      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
     }
     .btn-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 8px;
       align-items: center;
     }
     button {
@@ -140,301 +283,536 @@
       font-family: inherit;
       font-size: 13px;
       font-weight: 600;
-      border-radius: 6px;
-      padding: 6px 12px;
-      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      border: 1px solid var(--border-strong);
       background: var(--surface);
       color: var(--text);
-      transition: background 0.15s, border-color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      box-shadow: var(--shadow-sm);
     }
-    button:hover { background: #f3f4f6; }
-    .btn-ts { background: var(--blue-bg); color: var(--blue-text); border-color: #b6e3ff; }
-    .btn-ts:hover { background: #c8ebff; }
-    .btn-sw { background: var(--purple-bg); color: var(--purple-text); border-color: #e2c5ff; }
-    .btn-sw:hover { background: #f3dfff; }
-    .btn-pack { background: var(--primary); color: #fff; border-color: var(--primary); }
-    .btn-pack:hover { background: var(--primary-hover); }
-    .btn-success { background: #1a7f37; color: #fff; border-color: #1a7f37; }
-    .btn-success:hover { background: #116329; }
+    button:hover {
+      background: var(--surface-subtle);
+      transform: translateY(-1px);
+    }
+    button:active {
+      transform: translateY(0);
+    }
 
-    .search-input {
-      padding: 6px 10px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
+    .btn-ts {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border-color: #bfdbfe;
+    }
+    .btn-ts:hover { background: #dbeafe; }
+
+    .btn-sw {
+      background: var(--indigo-light);
+      color: var(--indigo);
+      border-color: #c7d2fe;
+    }
+    .btn-sw:hover { background: #e0e7ff; }
+
+    .btn-pack {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      border-color: #1d4ed8;
+    }
+    .btn-pack:hover {
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #059669, #047857);
+      color: #ffffff;
+      border-color: #047857;
+    }
+    .btn-success:hover {
+      background: linear-gradient(135deg, #047857, #065f46);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-box span {
+      position: absolute;
+      left: 10px;
       font-size: 13px;
-      min-width: 190px;
+      color: var(--muted);
+      pointer-events: none;
+    }
+    .search-input {
+      padding: 7px 12px 7px 30px;
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      min-width: 205px;
+      background: var(--surface-subtle);
+      color: var(--text);
+      transition: all 0.15s;
+    }
+    .search-input:focus {
+      outline: none;
+      background: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+    }
+    .filter-select {
+      padding: 7px 10px;
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      background: var(--surface-subtle);
+      color: var(--text);
+      cursor: pointer;
     }
 
     /* Tableur */
     .sheet-wrapper {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 0 0 8px 8px;
       overflow-x: auto;
-      margin-bottom: 20px;
     }
     table.sheet {
       width: 100%;
       border-collapse: collapse;
-      min-width: 860px;
+      min-width: 920px;
     }
     table.sheet th {
-      background: #f6f8fa;
-      color: var(--muted);
+      background: var(--surface-subtle);
+      color: var(--text-secondary);
       font-weight: 700;
-      font-size: 12px;
+      font-size: 11.5px;
       text-transform: uppercase;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.05em;
       text-align: left;
-      padding: 8px 10px;
-      border-bottom: 2px solid var(--border);
-      border-right: 1px solid var(--border-light);
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--border-strong);
+      border-right: 1px solid var(--border);
       white-space: nowrap;
     }
     table.sheet td {
-      padding: 4px 6px;
-      border-bottom: 1px solid var(--border-light);
-      border-right: 1px solid var(--border-light);
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
       vertical-align: middle;
+      transition: background 0.12s;
     }
-    table.sheet tr:hover td {
-      background: #f8fafc;
+    table.sheet tbody tr:nth-child(even) td {
+      background: #fcfdfe;
     }
-    .col-num { width: 42px; text-align: center; color: var(--muted); font-weight: 600; }
-    .col-price { width: 85px; text-align: right; font-weight: 700; padding-right: 12px !important; white-space: nowrap; }
-    .col-del { width: 44px; text-align: center; }
+    table.sheet tbody tr:hover td {
+      background: #f1f5f9;
+    }
+
+    .col-num {
+      width: 46px;
+      text-align: center !important;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .col-price {
+      width: 105px;
+      text-align: right !important;
+      padding-right: 14px !important;
+      white-space: nowrap;
+      line-height: 1.25;
+    }
+    .price-main {
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .price-margin {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--teal);
+    }
+    .col-del {
+      width: 48px;
+      text-align: center !important;
+    }
 
     .cell-input, .cell-select {
       width: 100%;
-      padding: 5px 8px;
+      padding: 6px 9px;
       border: 1px solid transparent;
-      border-radius: 4px;
+      border-radius: 6px;
       background: transparent;
       font-family: inherit;
-      font-size: 13px;
+      font-size: 13.5px;
       color: var(--text);
+      transition: all 0.15s;
+    }
+    .cell-input {
+      font-weight: 500;
+    }
+    .cell-input:hover {
+      background: rgba(255,255,255,0.8);
+      border-color: var(--border-strong);
     }
     .cell-input:focus, .cell-select:focus {
       outline: none;
       border-color: var(--primary);
-      background: #fff;
-      box-shadow: 0 0 0 2px rgba(9,105,218,0.15);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
     .cell-select {
-      border-color: var(--border-light);
-      background: #fff;
+      border-color: var(--border);
+      background: #ffffff;
+      font-weight: 500;
+      cursor: pointer;
     }
+    .cell-select.missing-size {
+      border-color: #f59e0b;
+      background: #fffbeb;
+    }
+
     .disabled-cell {
       text-align: center;
-      color: #afb8c1;
-      font-weight: 600;
+      color: #cbd5e1;
+      font-weight: 700;
       user-select: none;
+      letter-spacing: 2px;
     }
 
     /* Badges statut paiement */
     .pay-select {
-      font-weight: 600;
-      border-radius: 6px;
-      padding: 5px 8px;
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 6px 12px;
       width: 100%;
       border: 1px solid transparent;
       cursor: pointer;
+      transition: all 0.15s;
     }
-    .pay-unpaid { background: var(--orange-bg); color: var(--orange-text); border-color: #eac54f; }
-    .pay-paid { background: var(--green-bg); color: var(--green-text); border-color: #82e596; }
+    .pay-unpaid {
+      background: var(--amber-light);
+      color: var(--amber);
+      border-color: var(--amber-border);
+    }
+    .pay-paid {
+      background: var(--emerald-light);
+      color: var(--emerald);
+      border-color: var(--emerald-border);
+    }
 
     .btn-del {
       background: transparent;
       border: none;
-      color: #8c959f;
-      font-size: 16px;
-      padding: 2px 6px;
-      border-radius: 4px;
+      box-shadow: none;
+      color: #94a3b8;
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      justify-content: center;
+      border-radius: 6px;
     }
     .btn-del:hover {
-      background: #ffebe9;
-      color: var(--danger);
+      background: var(--rose-light);
+      color: var(--rose);
+      transform: none;
     }
 
     /* Section Récapitulatif Fournisseur */
     .supplier-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: var(--shadow-md);
     }
     .supplier-header {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border-light);
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
     }
     .supplier-header h2 {
       margin: 0;
-      font-size: 16px;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .supplier-subtitle {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-top: 2px;
     }
     .warning-banner {
-      background: var(--orange-bg);
-      color: var(--orange-text);
-      border: 1px solid #eac54f;
-      padding: 8px 12px;
-      border-radius: 6px;
+      background: var(--amber-light);
+      color: #92400e;
+      border: 1px solid var(--amber-border);
+      padding: 10px 14px;
+      border-radius: 10px;
       font-size: 13px;
       font-weight: 600;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       display: none;
+      align-items: center;
+      gap: 8px;
     }
     .supplier-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 18px;
     }
     .recap-box {
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: 10px;
       overflow: hidden;
+      background: var(--surface);
     }
-    .recap-box h3 {
-      margin: 0;
-      padding: 8px 12px;
-      background: #f6f8fa;
+    .recap-box-header {
+      padding: 10px 14px;
+      background: var(--surface-subtle);
       border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .recap-box-header h3 {
+      margin: 0;
       font-size: 14px;
+      font-weight: 700;
     }
     table.recap-table {
       width: 100%;
       border-collapse: collapse;
     }
-    table.recap-table th, table.recap-table td {
-      padding: 6px 12px;
-      border-bottom: 1px solid var(--border-light);
+    table.recap-table th {
+      padding: 8px 14px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      background: #fcfdfe;
+      border-bottom: 1px solid var(--border);
       text-align: left;
+    }
+    table.recap-table td {
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13.5px;
     }
     table.recap-table th:last-child, table.recap-table td:last-child {
       text-align: right;
+    }
+    .qty-pill {
+      display: inline-block;
+      min-width: 28px;
+      text-align: center;
+      padding: 2px 9px;
+      border-radius: 999px;
       font-weight: 700;
+      font-size: 13px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
     }
     table.recap-table tr.zero-row td {
-      color: #9ca3af;
-      font-weight: 400;
+      color: #94a3b8;
+    }
+    table.recap-table tr.zero-row .qty-pill {
+      background: #f1f5f9;
+      color: #94a3b8;
+      font-weight: 500;
     }
     table.recap-table tr.total-row td {
-      background: #f6f8fa;
-      font-weight: 700;
-      border-top: 2px solid var(--border);
+      background: var(--surface-subtle);
+      font-weight: 800;
+      font-size: 14px;
+      border-top: 2px solid var(--border-strong);
       border-bottom: none;
     }
 
     /* Modale configuration tailles */
     dialog {
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 18px;
-      max-width: 460px;
+      border-radius: 14px;
+      padding: 22px;
+      max-width: 480px;
       width: 92%;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+      box-shadow: var(--shadow-lg);
+      color: var(--text);
     }
-    dialog::backdrop { background: rgba(0,0,0,0.4); }
-    .form-group { margin-bottom: 12px; }
-    .form-group label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 13px; }
+    dialog::backdrop {
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(2px);
+    }
+    .form-group { margin-bottom: 14px; }
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 5px;
+      font-size: 13px;
+    }
     .form-group input {
       width: 100%;
-      padding: 7px 10px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
+      padding: 9px 12px;
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13.5px;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
     }
 
     /* Impression dédiée Bon de Commande Fournisseur */
     @media print {
       body { background: #fff; }
-      .topbar, .stats-bar, .toolbar, .sheet-wrapper, .no-print { display: none !important; }
-      .container { max-width: 100%; padding: 0; }
-      .supplier-card { border: none; padding: 0; }
-      .print-date { display: block !important; margin-bottom: 12px; color: #333; }
+      .hero-header, .stats-bar, .main-card, .no-print { display: none !important; }
+      .container { max-width: 100%; margin: 0; padding: 0; }
+      .supplier-card { border: none; box-shadow: none; padding: 0; }
+      .print-date { display: block !important; margin-bottom: 14px; color: #334155; font-weight: 600; }
+      .qty-pill { border: 1px solid #cbd5e1; background: none !important; color: #000 !important; }
     }
     .print-date { display: none; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- En-tête -->
-    <div class="topbar">
-      <div>
-        <h1>Vente T-shirts & Sweats — Établissement</h1>
-        <div style="font-size:12px; color:var(--muted);">T-shirt : <strong>10 €</strong> • Sweat : <strong>25 €</strong> • Pack (T-shirt + Sweat) : <strong>32 €</strong></div>
+  <!-- En-tête moderne -->
+  <header class="hero-header">
+    <div class="hero-inner">
+      <div class="brand-block">
+        <div class="brand-icon">👕</div>
+        <div>
+          <h1 class="hero-title">Commandes T-shirts & Sweats</h1>
+          <div class="price-pills">
+            <span class="price-pill">T-shirt : <strong>10 €</strong> <span class="marge-tag">(+3 € net)</span></span>
+            <span class="price-pill">Sweat : <strong>25 €</strong> <span class="marge-tag">(+8 € net)</span></span>
+            <span class="price-pill">Pack : <strong>32 €</strong> <span class="marge-tag">(+8 € net)</span></span>
+          </div>
+        </div>
       </div>
-      <div style="display:flex; align-items:center; gap:8px;">
+
+      <div class="header-actions">
         <span id="syncStatus" class="sync-badge"><span class="sync-dot"></span> Connexion Firebase...</span>
-        <button onclick="openConfigModal()">⚙️ Configurer les tailles</button>
+        <button class="btn-glass" onclick="openConfigModal()">⚙️ Tailles disponibles</button>
       </div>
     </div>
+  </header>
 
-    <!-- Compteurs financiers -->
+  <div class="container">
+    <!-- Compteurs financiers & Bénéfice Net -->
     <div class="stats-bar">
-      <div class="stat-card">
-        <div class="stat-label">Commandes</div>
-        <div class="stat-value" id="statCount">0</div>
-        <div class="stat-sub" id="statBreakdown">0 TS • 0 SW • 0 Packs</div>
+      <div class="stat-card" style="--accent: #2563eb; --icon-bg: #eff6ff;">
+        <div>
+          <div class="stat-label">Commandes</div>
+          <div class="stat-value" id="statCount">0</div>
+          <div class="stat-sub" id="statBreakdown">0 TS • 0 SW • 0 Pack</div>
+        </div>
+        <div class="stat-icon">📋</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-label">Total attendu</div>
-        <div class="stat-value" id="statTotal">0 €</div>
-        <div class="stat-sub">Toutes commandes</div>
+
+      <div class="stat-card" style="--accent: #4f46e5; --icon-bg: #eef2ff;">
+        <div>
+          <div class="stat-label">Total ventes</div>
+          <div class="stat-value" id="statTotal">0 €</div>
+          <div class="stat-sub" id="statCost">Achat fournisseur : 0 €</div>
+        </div>
+        <div class="stat-icon">💶</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-label">Encaissé</div>
-        <div class="stat-value" style="color:var(--green-text);" id="statPaid">0 €</div>
-        <div class="stat-sub" id="statPaidDetail">Esp: 0€ • Chq: 0€ • Ligne: 0€</div>
+
+      <div class="stat-card" style="--accent: #059669; --icon-bg: #ecfdf5;">
+        <div style="flex:1;">
+          <div class="stat-label">Encaissé</div>
+          <div class="stat-value" style="color:var(--emerald);" id="statPaid">0 €</div>
+          <div class="stat-sub" id="statPaidDetail">Esp: 0€ • Chq: 0€ • Ligne: 0€</div>
+          <div class="progress-track"><div class="progress-fill" id="paidProgress" style="width:0%;"></div></div>
+        </div>
+        <div class="stat-icon">✅</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-label">Reste à régler</div>
-        <div class="stat-value" style="color:var(--orange-text);" id="statUnpaid">0 €</div>
-        <div class="stat-sub" id="statUnpaidCount">0 élève(s) en attente</div>
+
+      <div class="stat-card" style="--accent: #d97706; --icon-bg: #fffbeb;">
+        <div>
+          <div class="stat-label">Reste à régler</div>
+          <div class="stat-value" style="color:var(--amber);" id="statUnpaid">0 €</div>
+          <div class="stat-sub" id="statUnpaidCount">0 élève(s) en attente</div>
+        </div>
+        <div class="stat-icon">⏳</div>
+      </div>
+
+      <div class="stat-card highlight-profit" style="--accent: #0d9488; --icon-bg: #ccfbf1;">
+        <div>
+          <div class="stat-label" style="color:var(--teal);">Bénéfice Net</div>
+          <div class="stat-value" style="color:var(--teal);" id="statNetProfit">0 €</div>
+          <div class="stat-sub" id="statNetPaid">Dont 0 € déjà encaissés</div>
+        </div>
+        <div class="stat-icon">📈</div>
       </div>
     </div>
 
-    <!-- Barre d'ajout rapide -->
-    <div class="toolbar">
-      <div class="btn-group">
-        <button class="btn-ts" onclick="addOrder('tshirt')">+ T-shirt (10 €)</button>
-        <button class="btn-sw" onclick="addOrder('sweat')">+ Sweat (25 €)</button>
-        <button class="btn-pack" onclick="addOrder('pack')">+ Pack T-shirt + Sweat (32 €)</button>
-      </div>
-      <div class="btn-group">
-        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Rechercher un élève, classe..." oninput="renderTable()" />
-        <button onclick="exportFullCSV()" title="Exporter tout le tableur élèves">📥 Export Élèves (CSV)</button>
-      </div>
-    </div>
+    <!-- Carte Tableur Élèves -->
+    <div class="main-card">
+      <div class="toolbar">
+        <div class="btn-group">
+          <button class="btn-ts" onclick="addOrder('tshirt')">+ T-shirt (10 €)</button>
+          <button class="btn-sw" onclick="addOrder('sweat')">+ Sweat (25 €)</button>
+          <button class="btn-pack" onclick="addOrder('pack')">+ Pack T-shirt + Sweat (32 €)</button>
+        </div>
 
-    <!-- Tableur principal -->
-    <div class="sheet-wrapper">
-      <table class="sheet">
-        <thead>
-          <tr>
-            <th class="col-num">N°</th>
-            <th style="min-width:190px;">Nom & Prénom Élève</th>
-            <th style="width:95px;">Classe</th>
-            <th style="width:195px;">Choix du produit</th>
-            <th style="width:125px;">Taille T-shirt</th>
-            <th style="width:125px;">Taille Sweat</th>
-            <th class="col-price">Prix</th>
-            <th style="width:155px;">Règlement</th>
-            <th class="col-del"></th>
-          </tr>
-        </thead>
-        <tbody id="ordersBody"></tbody>
-      </table>
+        <div class="filter-group">
+          <select id="paymentFilter" class="filter-select" onchange="renderTable()" title="Filtrer par paiement">
+            <option value="all">Tous les statuts</option>
+            <option value="unpaid">⏳ À régler uniquement</option>
+            <option value="paid">✅ Réglés uniquement</option>
+          </select>
+          <div class="search-box">
+            <span>🔍</span>
+            <input type="text" id="searchInput" class="search-input" placeholder="Élève ou classe..." oninput="renderTable()" />
+          </div>
+          <button onclick="exportFullCSV()" title="Exporter tout le suivi élèves">📥 Export Élèves</button>
+        </div>
+      </div>
+
+      <div class="sheet-wrapper">
+        <table class="sheet">
+          <thead>
+            <tr>
+              <th class="col-num">N°</th>
+              <th style="min-width:200px;">Nom & Prénom Élève</th>
+              <th style="width:95px;">Classe</th>
+              <th style="width:205px;">Choix du produit</th>
+              <th style="width:130px;">Taille T-shirt</th>
+              <th style="width:130px;">Taille Sweat</th>
+              <th class="col-price">Prix / Marge</th>
+              <th style="width:165px;">Règlement</th>
+              <th class="col-del"></th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Récapitulatif Fournisseur -->
     <div class="supplier-card">
       <div class="supplier-header">
         <div>
-          <h2>📦 Récapitulatif Fournisseur (Quantités par taille)</h2>
+          <h2>📦 Récapitulatif Fournisseur</h2>
+          <div class="supplier-subtitle no-print">Décompte automatique des quantités par taille pour votre bon de commande</div>
           <div class="print-date" id="printDate"></div>
         </div>
         <div class="btn-group no-print">
@@ -447,7 +825,9 @@
 
       <div class="supplier-grid">
         <div class="recap-box">
-          <h3>👕 T-SHIRTS</h3>
+          <div class="recap-box-header">
+            <h3>👕 T-SHIRTS</h3>
+          </div>
           <table class="recap-table">
             <thead>
               <tr><th>Taille</th><th>Quantité</th></tr>
@@ -457,7 +837,9 @@
         </div>
 
         <div class="recap-box">
-          <h3>🧥 SWEATS</h3>
+          <div class="recap-box-header">
+            <h3>🧥 SWEATS</h3>
+          </div>
           <table class="recap-table">
             <thead>
               <tr><th>Taille</th><th>Quantité</th></tr>
@@ -471,17 +853,19 @@
 
   <!-- Modale de configuration des tailles -->
   <dialog id="configModal">
-    <h3 style="margin-top:0;">Configurer les tailles disponibles</h3>
-    <p style="font-size:12px; color:var(--muted);">Séparez les tailles par des virgules. Elles seront synchronisées dans Firebase.</p>
+    <h3 style="margin-top:0; font-size:17px;">⚙️ Configurer les tailles disponibles</h3>
+    <p style="font-size:13px; color:var(--text-secondary); margin-bottom:14px;">
+      Indiquez les tailles séparées par des virgules. Elles seront immédiatement synchronisées sur Firebase.
+    </p>
     <div class="form-group">
-      <label for="cfgTshirtSizes">Tailles T-shirts</label>
+      <label for="cfgTshirtSizes">👕 Tailles T-shirts</label>
       <input type="text" id="cfgTshirtSizes" placeholder="Ex: 10 ans, 12 ans, XS, S, M, L, XL" />
     </div>
     <div class="form-group">
-      <label for="cfgSweatSizes">Tailles Sweats</label>
+      <label for="cfgSweatSizes">🧥 Tailles Sweats</label>
       <input type="text" id="cfgSweatSizes" placeholder="Ex: 10 ans, 12 ans, XS, S, M, L, XL" />
     </div>
-    <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:16px;">
+    <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:18px;">
       <button onclick="document.getElementById('configModal').close()">Annuler</button>
       <button class="btn-pack" onclick="saveConfig()">Enregistrer</button>
     </div>
@@ -506,7 +890,11 @@
     const COLLECTION_NAME = "tshirtsweat";
     const CONFIG_DOC_ID = "_config_tailles";
 
+    // Tarifs de vente, coûts d'achat et bénéfices nets unitaires
     const PRICES = { tshirt: 10, sweat: 25, pack: 32 };
+    const COSTS  = { tshirt: 7,  sweat: 17, pack: 24 }; // 7€ + 17€ = 24€ pour le pack
+    const MARGINS = { tshirt: 3, sweat: 8,  pack: 8  }; // 10-7=3€, 25-17=8€, 32-24=8€
+
     const DEFAULT_SIZES = ["10 ans", "12 ans", "14 ans", "XS", "S", "M", "L", "XL", "XXL"];
 
     let tshirtSizes = [...DEFAULT_SIZES];
@@ -523,10 +911,9 @@
       badge.innerHTML = `<span class="sync-dot"></span> ${text}`;
     }
 
-    // Écoute des commandes et de la configuration dans la collection tshirtsweat
     db.collection(COLLECTION_NAME).onSnapshot(
       (snapshot) => {
-        setSyncState(true, "Cloud synchronisé (tshirtsweat)");
+        setSyncState(true, "Synchronisé (tshirtsweat)");
         const loadedOrders = [];
 
         snapshot.forEach((doc) => {
@@ -535,12 +922,10 @@
             if (Array.isArray(data.tshirtSizes) && data.tshirtSizes.length) tshirtSizes = data.tshirtSizes;
             if (Array.isArray(data.sweatSizes) && data.sweatSizes.length) sweatSizes = data.sweatSizes;
           } else if (data && data.type) {
-            // Ignore les documents factices type "init"
             loadedOrders.push({ id: doc.id, ...data });
           }
         });
 
-        // Tri chronologique par date de création
         loadedOrders.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
         orders = loadedOrders;
         renderAll();
@@ -555,7 +940,7 @@
       },
       (error) => {
         console.error("Erreur Firestore :", error);
-        setSyncState(false, "Hors ligne / Vérifier règles Firestore");
+        setSyncState(false, "Hors ligne / Vérifier règles");
       }
     );
 
@@ -569,10 +954,10 @@
       const payload = {
         student: "",
         studentClass: "",
-        type: type, // 'tshirt' | 'sweat' | 'pack'
+        type: type,
         tshirtSize: "",
         sweatSize: "",
-        payment: "unpaid", // 'unpaid' | 'cash' | 'check' | 'online'
+        payment: "unpaid",
         createdAt: Date.now()
       };
 
@@ -586,7 +971,6 @@
     async function updateField(id, field, value) {
       const updates = { [field]: value };
 
-      // Nettoyage automatique des tailles non concernées si on change de produit
       if (field === "type") {
         if (value === "tshirt") updates.sweatSize = "";
         if (value === "sweat") updates.tshirtSize = "";
@@ -632,7 +1016,7 @@
         tshirtSizes: ts,
         sweatSizes: sw
       });
-      document.getElementById("configModal").close();
+      document.getElementById('configModal').close();
     }
 
     // =========================================================
@@ -660,22 +1044,30 @@
     function renderTable() {
       const tbody = document.getElementById("ordersBody");
       const query = document.getElementById("searchInput").value.trim().toLowerCase();
+      const payFilter = document.getElementById("paymentFilter").value;
 
       const filtered = orders.filter(o => {
-        if (!query) return true;
-        return (o.student || "").toLowerCase().includes(query) ||
-               (o.studentClass || "").toLowerCase().includes(query);
+        const matchesQuery = !query ||
+          (o.student || "").toLowerCase().includes(query) ||
+          (o.studentClass || "").toLowerCase().includes(query);
+        const isPaid = o.payment && o.payment !== "unpaid";
+        const matchesPay = payFilter === "all" ||
+          (payFilter === "unpaid" && !isPaid) ||
+          (payFilter === "paid" && isPaid);
+        return matchesQuery && matchesPay;
       });
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:24px; color:var(--muted);">
-          Aucune commande affichée. Cliquez sur <strong>+ T-shirt</strong>, <strong>+ Sweat</strong> ou <strong>+ Pack</strong> ci-dessus pour ajouter une ligne.
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:32px; color:var(--muted);">
+          <div style="font-size:24px; margin-bottom:6px;">🛍️</div>
+          Aucune commande affichée. Utilisez les boutons <strong>+ T-shirt</strong>, <strong>+ Sweat</strong> ou <strong>+ Pack</strong> pour démarrer.
         </td></tr>`;
         return;
       }
 
       tbody.innerHTML = filtered.map((o, idx) => {
         const price = PRICES[o.type] || 0;
+        const margin = MARGINS[o.type] || 0;
         const needTs = o.type === "tshirt" || o.type === "pack";
         const needSw = o.type === "sweat" || o.type === "pack";
         const isPaid = o.payment && o.payment !== "unpaid";
@@ -697,22 +1089,25 @@
             </td>
             <td>
               <select class="cell-select" onchange="updateField('${o.id}', 'type', this.value)">
-                <option value="tshirt" ${o.type === "tshirt" ? "selected" : ""}>T-shirt seul (10 €)</option>
-                <option value="sweat" ${o.type === "sweat" ? "selected" : ""}>Sweat seul (25 €)</option>
-                <option value="pack" ${o.type === "pack" ? "selected" : ""}>Pack T-shirt + Sweat (32 €)</option>
+                <option value="tshirt" ${o.type === "tshirt" ? "selected" : ""}>👕 T-shirt seul (10 €)</option>
+                <option value="sweat" ${o.type === "sweat" ? "selected" : ""}>🧥 Sweat seul (25 €)</option>
+                <option value="pack" ${o.type === "pack" ? "selected" : ""}>🎁 Pack T-shirt + Sweat (32 €)</option>
               </select>
             </td>
             <td>
               ${needTs
-                ? `<select class="cell-select" onchange="updateField('${o.id}', 'tshirtSize', this.value)">${buildSizeOptions(tshirtSizes, o.tshirtSize)}</select>`
+                ? `<select class="cell-select ${!o.tshirtSize ? "missing-size" : ""}" onchange="updateField('${o.id}', 'tshirtSize', this.value)">${buildSizeOptions(tshirtSizes, o.tshirtSize)}</select>`
                 : `<div class="disabled-cell">—</div>`}
             </td>
             <td>
               ${needSw
-                ? `<select class="cell-select" onchange="updateField('${o.id}', 'sweatSize', this.value)">${buildSizeOptions(sweatSizes, o.sweatSize)}</select>`
+                ? `<select class="cell-select ${!o.sweatSize ? "missing-size" : ""}" onchange="updateField('${o.id}', 'sweatSize', this.value)">${buildSizeOptions(sweatSizes, o.sweatSize)}</select>`
                 : `<div class="disabled-cell">—</div>`}
             </td>
-            <td class="col-price">${price} €</td>
+            <td class="col-price">
+              <div class="price-main">${price} €</div>
+              <div class="price-margin">+${margin} € net</div>
+            </td>
             <td>
               <select class="pay-select ${isPaid ? "pay-paid" : "pay-unpaid"}"
                 onchange="updateField('${o.id}', 'payment', this.value)">
@@ -723,7 +1118,7 @@
               </select>
             </td>
             <td class="col-del">
-              <button class="btn-del" title="Supprimer" onclick="deleteOrder('${o.id}')">✕</button>
+              <button class="btn-del" title="Supprimer cette ligne" onclick="deleteOrder('${o.id}')">✕</button>
             </td>
           </tr>
         `;
@@ -732,12 +1127,19 @@
 
     function renderStats() {
       let countTs = 0, countSw = 0, countPack = 0;
-      let total = 0, paid = 0, unpaid = 0, unpaidCount = 0;
+      let total = 0, totalCost = 0, paid = 0, unpaid = 0, unpaidCount = 0;
+      let netProfitTotal = 0, netProfitPaid = 0;
       let cash = 0, check = 0, online = 0;
 
       orders.forEach(o => {
         const p = PRICES[o.type] || 0;
+        const c = COSTS[o.type] || 0;
+        const m = MARGINS[o.type] || 0;
+
         total += p;
+        totalCost += c;
+        netProfitTotal += m;
+
         if (o.type === "tshirt") countTs++;
         if (o.type === "sweat") countSw++;
         if (o.type === "pack") countPack++;
@@ -747,19 +1149,26 @@
           unpaidCount++;
         } else {
           paid += p;
+          netProfitPaid += m;
           if (o.payment === "cash") cash += p;
           if (o.payment === "check") check += p;
           if (o.payment === "online") online += p;
         }
       });
 
+      const pct = total > 0 ? Math.round((paid / total) * 100) : 0;
+
       document.getElementById("statCount").textContent = orders.length;
       document.getElementById("statBreakdown").textContent = `${countTs} TS • ${countSw} SW • ${countPack} Pack(s)`;
       document.getElementById("statTotal").textContent = `${total} €`;
+      document.getElementById("statCost").textContent = `Achat fournisseur : ${totalCost} €`;
       document.getElementById("statPaid").textContent = `${paid} €`;
       document.getElementById("statPaidDetail").textContent = `Esp: ${cash}€ • Chq: ${check}€ • Ligne: ${online}€`;
+      document.getElementById("paidProgress").style.width = `${pct}%`;
       document.getElementById("statUnpaid").textContent = `${unpaid} €`;
       document.getElementById("statUnpaidCount").textContent = `${unpaidCount} élève(s) en attente`;
+      document.getElementById("statNetProfit").textContent = `${netProfitTotal} €`;
+      document.getElementById("statNetPaid").textContent = `Dont ${netProfitPaid} € déjà encaissés`;
     }
 
     function computeSupplierCounts() {
@@ -797,8 +1206,8 @@
 
       const alertBox = document.getElementById("missingSizeAlert");
       if (missingTs > 0 || missingSw > 0) {
-        alertBox.style.display = "block";
-        alertBox.textContent = `⚠️ Attention : ${missingTs} taille(s) de T-shirt et ${missingSw} taille(s) de Sweat ne sont pas encore renseignées dans le tableau ci-dessus.`;
+        alertBox.style.display = "flex";
+        alertBox.innerHTML = `<span>⚠️</span> <span>Attention : <strong>${missingTs} taille(s) de T-shirt</strong> et <strong>${missingSw} taille(s) de Sweat</strong> restent à sélectionner dans le tableau (cases surlignées en jaune).</span>`;
       } else {
         alertBox.style.display = "none";
       }
@@ -807,7 +1216,7 @@
       let totalTs = 0;
       const tsRows = Object.entries(tsMap).map(([size, qty]) => {
         totalTs += qty;
-        return `<tr class="${qty === 0 ? "zero-row" : ""}"><td>${escapeHtml(size)}</td><td>${qty}</td></tr>`;
+        return `<tr class="${qty === 0 ? "zero-row" : ""}"><td><strong>${escapeHtml(size)}</strong></td><td><span class="qty-pill">${qty}</span></td></tr>`;
       }).join("");
       document.getElementById("recapTshirtBody").innerHTML =
         tsRows + `<tr class="total-row"><td>TOTAL T-SHIRTS</td><td>${totalTs}</td></tr>`;
@@ -816,7 +1225,7 @@
       let totalSw = 0;
       const swRows = Object.entries(swMap).map(([size, qty]) => {
         totalSw += qty;
-        return `<tr class="${qty === 0 ? "zero-row" : ""}"><td>${escapeHtml(size)}</td><td>${qty}</td></tr>`;
+        return `<tr class="${qty === 0 ? "zero-row" : ""}"><td><strong>${escapeHtml(size)}</strong></td><td><span class="qty-pill">${qty}</span></td></tr>`;
       }).join("");
       document.getElementById("recapSweatBody").innerHTML =
         swRows + `<tr class="total-row"><td>TOTAL SWEATS</td><td>${totalSw}</td></tr>`;
@@ -855,7 +1264,7 @@
       const labelsType = { tshirt: "T-shirt seul", sweat: "Sweat seul", pack: "Pack T-shirt + Sweat" };
       const labelsPay = { unpaid: "À régler", cash: "Espèces", check: "Chèque", online: "En ligne" };
 
-      const lines = ["N°;Élève;Classe;Formule;Taille T-shirt;Taille Sweat;Prix (€);Règlement"];
+      const lines = ["N°;Élève;Classe;Formule;Taille T-shirt;Taille Sweat;Prix vente (€);Bénéfice net (€);Règlement"];
       orders.forEach((o, i) => {
         lines.push([
           i + 1,
@@ -865,6 +1274,7 @@
           o.tshirtSize || "-",
           o.sweatSize || "-",
           PRICES[o.type] || 0,
+          MARGINS[o.type] || 0,
           labelsPay[o.payment] || "À régler"
         ].join(";"));
       });
