@@ -148,4 +148,748 @@
       transition: background 0.15s, border-color 0.15s;
     }
     button:hover { background: #f3f4f6; }
-    .btn-ts { background: var(--blue-bg); color: var(--blue-text); border-color: #b
+    .btn-ts { background: var(--blue-bg); color: var(--blue-text); border-color: #b6e3ff; }
+    .btn-ts:hover { background: #c8ebff; }
+    .btn-sw { background: var(--purple-bg); color: var(--purple-text); border-color: #e2c5ff; }
+    .btn-sw:hover { background: #f3dfff; }
+    .btn-pack { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .btn-pack:hover { background: var(--primary-hover); }
+    .btn-success { background: #1a7f37; color: #fff; border-color: #1a7f37; }
+    .btn-success:hover { background: #116329; }
+
+    .search-input {
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13px;
+      min-width: 190px;
+    }
+
+    /* Tableur */
+    .sheet-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0 0 8px 8px;
+      overflow-x: auto;
+      margin-bottom: 20px;
+    }
+    table.sheet {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 860px;
+    }
+    table.sheet th {
+      background: #f6f8fa;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 2px solid var(--border);
+      border-right: 1px solid var(--border-light);
+      white-space: nowrap;
+    }
+    table.sheet td {
+      padding: 4px 6px;
+      border-bottom: 1px solid var(--border-light);
+      border-right: 1px solid var(--border-light);
+      vertical-align: middle;
+    }
+    table.sheet tr:hover td {
+      background: #f8fafc;
+    }
+    .col-num { width: 42px; text-align: center; color: var(--muted); font-weight: 600; }
+    .col-price { width: 85px; text-align: right; font-weight: 700; padding-right: 12px !important; white-space: nowrap; }
+    .col-del { width: 44px; text-align: center; }
+
+    .cell-input, .cell-select {
+      width: 100%;
+      padding: 5px 8px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      background: transparent;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--text);
+    }
+    .cell-input:focus, .cell-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 0 0 2px rgba(9,105,218,0.15);
+    }
+    .cell-select {
+      border-color: var(--border-light);
+      background: #fff;
+    }
+    .disabled-cell {
+      text-align: center;
+      color: #afb8c1;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    /* Badges statut paiement */
+    .pay-select {
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 5px 8px;
+      width: 100%;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+    .pay-unpaid { background: var(--orange-bg); color: var(--orange-text); border-color: #eac54f; }
+    .pay-paid { background: var(--green-bg); color: var(--green-text); border-color: #82e596; }
+
+    .btn-del {
+      background: transparent;
+      border: none;
+      color: #8c959f;
+      font-size: 16px;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .btn-del:hover {
+      background: #ffebe9;
+      color: var(--danger);
+    }
+
+    /* Section Récapitulatif Fournisseur */
+    .supplier-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .supplier-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .supplier-header h2 {
+      margin: 0;
+      font-size: 16px;
+    }
+    .warning-banner {
+      background: var(--orange-bg);
+      color: var(--orange-text);
+      border: 1px solid #eac54f;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: none;
+    }
+    .supplier-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .recap-box {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .recap-box h3 {
+      margin: 0;
+      padding: 8px 12px;
+      background: #f6f8fa;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    table.recap-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table.recap-table th, table.recap-table td {
+      padding: 6px 12px;
+      border-bottom: 1px solid var(--border-light);
+      text-align: left;
+    }
+    table.recap-table th:last-child, table.recap-table td:last-child {
+      text-align: right;
+      font-weight: 700;
+    }
+    table.recap-table tr.zero-row td {
+      color: #9ca3af;
+      font-weight: 400;
+    }
+    table.recap-table tr.total-row td {
+      background: #f6f8fa;
+      font-weight: 700;
+      border-top: 2px solid var(--border);
+      border-bottom: none;
+    }
+
+    /* Modale configuration tailles */
+    dialog {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px;
+      max-width: 460px;
+      width: 92%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    }
+    dialog::backdrop { background: rgba(0,0,0,0.4); }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 13px; }
+    .form-group input {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    /* Impression dédiée Bon de Commande Fournisseur */
+    @media print {
+      body { background: #fff; }
+      .topbar, .stats-bar, .toolbar, .sheet-wrapper, .no-print { display: none !important; }
+      .container { max-width: 100%; padding: 0; }
+      .supplier-card { border: none; padding: 0; }
+      .print-date { display: block !important; margin-bottom: 12px; color: #333; }
+    }
+    .print-date { display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- En-tête -->
+    <div class="topbar">
+      <div>
+        <h1>Vente T-shirts & Sweats — Établissement</h1>
+        <div style="font-size:12px; color:var(--muted);">T-shirt : <strong>10 €</strong> • Sweat : <strong>25 €</strong> • Pack (T-shirt + Sweat) : <strong>32 €</strong></div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span id="syncStatus" class="sync-badge"><span class="sync-dot"></span> Connexion Firebase...</span>
+        <button onclick="openConfigModal()">⚙️ Configurer les tailles</button>
+      </div>
+    </div>
+
+    <!-- Compteurs financiers -->
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-label">Commandes</div>
+        <div class="stat-value" id="statCount">0</div>
+        <div class="stat-sub" id="statBreakdown">0 TS • 0 SW • 0 Packs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total attendu</div>
+        <div class="stat-value" id="statTotal">0 €</div>
+        <div class="stat-sub">Toutes commandes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Encaissé</div>
+        <div class="stat-value" style="color:var(--green-text);" id="statPaid">0 €</div>
+        <div class="stat-sub" id="statPaidDetail">Esp: 0€ • Chq: 0€ • Ligne: 0€</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Reste à régler</div>
+        <div class="stat-value" style="color:var(--orange-text);" id="statUnpaid">0 €</div>
+        <div class="stat-sub" id="statUnpaidCount">0 élève(s) en attente</div>
+      </div>
+    </div>
+
+    <!-- Barre d'ajout rapide -->
+    <div class="toolbar">
+      <div class="btn-group">
+        <button class="btn-ts" onclick="addOrder('tshirt')">+ T-shirt (10 €)</button>
+        <button class="btn-sw" onclick="addOrder('sweat')">+ Sweat (25 €)</button>
+        <button class="btn-pack" onclick="addOrder('pack')">+ Pack T-shirt + Sweat (32 €)</button>
+      </div>
+      <div class="btn-group">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Rechercher un élève, classe..." oninput="renderTable()" />
+        <button onclick="exportFullCSV()" title="Exporter tout le tableur élèves">📥 Export Élèves (CSV)</button>
+      </div>
+    </div>
+
+    <!-- Tableur principal -->
+    <div class="sheet-wrapper">
+      <table class="sheet">
+        <thead>
+          <tr>
+            <th class="col-num">N°</th>
+            <th style="min-width:190px;">Nom & Prénom Élève</th>
+            <th style="width:95px;">Classe</th>
+            <th style="width:195px;">Choix du produit</th>
+            <th style="width:125px;">Taille T-shirt</th>
+            <th style="width:125px;">Taille Sweat</th>
+            <th class="col-price">Prix</th>
+            <th style="width:155px;">Règlement</th>
+            <th class="col-del"></th>
+          </tr>
+        </thead>
+        <tbody id="ordersBody"></tbody>
+      </table>
+    </div>
+
+    <!-- Récapitulatif Fournisseur -->
+    <div class="supplier-card">
+      <div class="supplier-header">
+        <div>
+          <h2>📦 Récapitulatif Fournisseur (Quantités par taille)</h2>
+          <div class="print-date" id="printDate"></div>
+        </div>
+        <div class="btn-group no-print">
+          <button class="btn-success" onclick="downloadSupplierCSV()">⬇️ Télécharger le récap fournisseur (CSV)</button>
+          <button onclick="window.print()">🖨️ Imprimer / PDF Bon Fournisseur</button>
+        </div>
+      </div>
+
+      <div id="missingSizeAlert" class="warning-banner no-print"></div>
+
+      <div class="supplier-grid">
+        <div class="recap-box">
+          <h3>👕 T-SHIRTS</h3>
+          <table class="recap-table">
+            <thead>
+              <tr><th>Taille</th><th>Quantité</th></tr>
+            </thead>
+            <tbody id="recapTshirtBody"></tbody>
+          </table>
+        </div>
+
+        <div class="recap-box">
+          <h3>🧥 SWEATS</h3>
+          <table class="recap-table">
+            <thead>
+              <tr><th>Taille</th><th>Quantité</th></tr>
+            </thead>
+            <tbody id="recapSweatBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modale de configuration des tailles -->
+  <dialog id="configModal">
+    <h3 style="margin-top:0;">Configurer les tailles disponibles</h3>
+    <p style="font-size:12px; color:var(--muted);">Séparez les tailles par des virgules. Elles seront synchronisées dans Firebase.</p>
+    <div class="form-group">
+      <label for="cfgTshirtSizes">Tailles T-shirts</label>
+      <input type="text" id="cfgTshirtSizes" placeholder="Ex: 10 ans, 12 ans, XS, S, M, L, XL" />
+    </div>
+    <div class="form-group">
+      <label for="cfgSweatSizes">Tailles Sweats</label>
+      <input type="text" id="cfgSweatSizes" placeholder="Ex: 10 ans, 12 ans, XS, S, M, L, XL" />
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:16px;">
+      <button onclick="document.getElementById('configModal').close()">Annuler</button>
+      <button class="btn-pack" onclick="saveConfig()">Enregistrer</button>
+    </div>
+  </dialog>
+
+  <script>
+    // =========================================================
+    // 1. CONFIGURATION FIREBASE (Projet maillots-a8927)
+    // =========================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyB-YxRRl5hqloBnM1lnXn49v8jIKdg6V58",
+      authDomain: "maillots-a8927.firebaseapp.com",
+      databaseURL: "https://maillots-a8927-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "maillots-a8927",
+      storageBucket: "maillots-a8927.firebasestorage.app",
+      messagingSenderId: "112094741681",
+      appId: "1:112094741681:web:0471878f095894aa394e90"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const COLLECTION_NAME = "tshirtsweat";
+    const CONFIG_DOC_ID = "_config_tailles";
+
+    const PRICES = { tshirt: 10, sweat: 25, pack: 32 };
+    const DEFAULT_SIZES = ["10 ans", "12 ans", "14 ans", "XS", "S", "M", "L", "XL", "XXL"];
+
+    let tshirtSizes = [...DEFAULT_SIZES];
+    let sweatSizes = [...DEFAULT_SIZES];
+    let orders = [];
+    let focusNewId = null;
+
+    // =========================================================
+    // 2. SYNCHRONISATION TEMPS RÉEL FIRESTORE
+    // =========================================================
+    function setSyncState(online, text) {
+      const badge = document.getElementById("syncStatus");
+      badge.className = "sync-badge" + (online ? " online" : "");
+      badge.innerHTML = `<span class="sync-dot"></span> ${text}`;
+    }
+
+    // Écoute des commandes et de la configuration dans la collection tshirtsweat
+    db.collection(COLLECTION_NAME).onSnapshot(
+      (snapshot) => {
+        setSyncState(true, "Cloud synchronisé (tshirtsweat)");
+        const loadedOrders = [];
+
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          if (doc.id === CONFIG_DOC_ID) {
+            if (Array.isArray(data.tshirtSizes) && data.tshirtSizes.length) tshirtSizes = data.tshirtSizes;
+            if (Array.isArray(data.sweatSizes) && data.sweatSizes.length) sweatSizes = data.sweatSizes;
+          } else if (data && data.type) {
+            // Ignore les documents factices type "init"
+            loadedOrders.push({ id: doc.id, ...data });
+          }
+        });
+
+        // Tri chronologique par date de création
+        loadedOrders.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+        orders = loadedOrders;
+        renderAll();
+
+        if (focusNewId) {
+          const input = document.querySelector(`input[data-focus-id="${focusNewId}"]`);
+          if (input) {
+            input.focus();
+            focusNewId = null;
+          }
+        }
+      },
+      (error) => {
+        console.error("Erreur Firestore :", error);
+        setSyncState(false, "Hors ligne / Vérifier règles Firestore");
+      }
+    );
+
+    // =========================================================
+    // 3. ACTIONS CRUD SUR FIRESTORE
+    // =========================================================
+    async function addOrder(type) {
+      const newDocRef = db.collection(COLLECTION_NAME).doc();
+      focusNewId = newDocRef.id;
+
+      const payload = {
+        student: "",
+        studentClass: "",
+        type: type, // 'tshirt' | 'sweat' | 'pack'
+        tshirtSize: "",
+        sweatSize: "",
+        payment: "unpaid", // 'unpaid' | 'cash' | 'check' | 'online'
+        createdAt: Date.now()
+      };
+
+      try {
+        await newDocRef.set(payload);
+      } catch (e) {
+        alert("Erreur lors de l'ajout dans Firebase : " + e.message);
+      }
+    }
+
+    async function updateField(id, field, value) {
+      const updates = { [field]: value };
+
+      // Nettoyage automatique des tailles non concernées si on change de produit
+      if (field === "type") {
+        if (value === "tshirt") updates.sweatSize = "";
+        if (value === "sweat") updates.tshirtSize = "";
+      }
+
+      try {
+        await db.collection(COLLECTION_NAME).doc(id).update(updates);
+      } catch (e) {
+        console.error("Erreur mise à jour :", e);
+      }
+    }
+
+    async function deleteOrder(id) {
+      if (!confirm("Supprimer cette ligne de commande ?")) return;
+      try {
+        await db.collection(COLLECTION_NAME).doc(id).delete();
+      } catch (e) {
+        console.error("Erreur suppression :", e);
+      }
+    }
+
+    // =========================================================
+    // 4. CONFIGURATION DES TAILLES
+    // =========================================================
+    function openConfigModal() {
+      document.getElementById("cfgTshirtSizes").value = tshirtSizes.join(", ");
+      document.getElementById("cfgSweatSizes").value = sweatSizes.join(", ");
+      document.getElementById("configModal").showModal();
+    }
+
+    async function saveConfig() {
+      const ts = document.getElementById("cfgTshirtSizes").value
+        .split(",").map(s => s.trim()).filter(Boolean);
+      const sw = document.getElementById("cfgSweatSizes").value
+        .split(",").map(s => s.trim()).filter(Boolean);
+
+      if (!ts.length || !sw.length) {
+        alert("Veuillez renseigner au moins une taille pour chaque produit.");
+        return;
+      }
+
+      await db.collection(COLLECTION_NAME).doc(CONFIG_DOC_ID).set({
+        tshirtSizes: ts,
+        sweatSizes: sw
+      });
+      document.getElementById("configModal").close();
+    }
+
+    // =========================================================
+    // 5. RENDU DU TABLEUR, DES STATS ET DU BON FOURNISSEUR
+    // =========================================================
+    function renderAll() {
+      renderTable();
+      renderStats();
+      renderSupplierRecap();
+    }
+
+    function buildSizeOptions(sizesList, selectedValue) {
+      let opts = `<option value="">-- Taille --</option>`;
+      const allSizes = [...sizesList];
+      if (selectedValue && !allSizes.includes(selectedValue)) {
+        allSizes.push(selectedValue);
+      }
+      allSizes.forEach(sz => {
+        const sel = sz === selectedValue ? "selected" : "";
+        opts += `<option value="${escapeHtml(sz)}" ${sel}>${escapeHtml(sz)}</option>`;
+      });
+      return opts;
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById("ordersBody");
+      const query = document.getElementById("searchInput").value.trim().toLowerCase();
+
+      const filtered = orders.filter(o => {
+        if (!query) return true;
+        return (o.student || "").toLowerCase().includes(query) ||
+               (o.studentClass || "").toLowerCase().includes(query);
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:24px; color:var(--muted);">
+          Aucune commande affichée. Cliquez sur <strong>+ T-shirt</strong>, <strong>+ Sweat</strong> ou <strong>+ Pack</strong> ci-dessus pour ajouter une ligne.
+        </td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map((o, idx) => {
+        const price = PRICES[o.type] || 0;
+        const needTs = o.type === "tshirt" || o.type === "pack";
+        const needSw = o.type === "sweat" || o.type === "pack";
+        const isPaid = o.payment && o.payment !== "unpaid";
+
+        return `
+          <tr>
+            <td class="col-num">${idx + 1}</td>
+            <td>
+              <input class="cell-input" type="text" data-focus-id="${o.id}"
+                value="${escapeHtml(o.student || "")}"
+                placeholder="Nom Prénom..."
+                onchange="updateField('${o.id}', 'student', this.value)" />
+            </td>
+            <td>
+              <input class="cell-input" type="text"
+                value="${escapeHtml(o.studentClass || "")}"
+                placeholder="ex: 4eB"
+                onchange="updateField('${o.id}', 'studentClass', this.value)" />
+            </td>
+            <td>
+              <select class="cell-select" onchange="updateField('${o.id}', 'type', this.value)">
+                <option value="tshirt" ${o.type === "tshirt" ? "selected" : ""}>T-shirt seul (10 €)</option>
+                <option value="sweat" ${o.type === "sweat" ? "selected" : ""}>Sweat seul (25 €)</option>
+                <option value="pack" ${o.type === "pack" ? "selected" : ""}>Pack T-shirt + Sweat (32 €)</option>
+              </select>
+            </td>
+            <td>
+              ${needTs
+                ? `<select class="cell-select" onchange="updateField('${o.id}', 'tshirtSize', this.value)">${buildSizeOptions(tshirtSizes, o.tshirtSize)}</select>`
+                : `<div class="disabled-cell">—</div>`}
+            </td>
+            <td>
+              ${needSw
+                ? `<select class="cell-select" onchange="updateField('${o.id}', 'sweatSize', this.value)">${buildSizeOptions(sweatSizes, o.sweatSize)}</select>`
+                : `<div class="disabled-cell">—</div>`}
+            </td>
+            <td class="col-price">${price} €</td>
+            <td>
+              <select class="pay-select ${isPaid ? "pay-paid" : "pay-unpaid"}"
+                onchange="updateField('${o.id}', 'payment', this.value)">
+                <option value="unpaid" ${o.payment === "unpaid" ? "selected" : ""}>⏳ À régler</option>
+                <option value="cash" ${o.payment === "cash" ? "selected" : ""}>✅ Espèces</option>
+                <option value="check" ${o.payment === "check" ? "selected" : ""}>✅ Chèque</option>
+                <option value="online" ${o.payment === "online" ? "selected" : ""}>✅ En ligne</option>
+              </select>
+            </td>
+            <td class="col-del">
+              <button class="btn-del" title="Supprimer" onclick="deleteOrder('${o.id}')">✕</button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderStats() {
+      let countTs = 0, countSw = 0, countPack = 0;
+      let total = 0, paid = 0, unpaid = 0, unpaidCount = 0;
+      let cash = 0, check = 0, online = 0;
+
+      orders.forEach(o => {
+        const p = PRICES[o.type] || 0;
+        total += p;
+        if (o.type === "tshirt") countTs++;
+        if (o.type === "sweat") countSw++;
+        if (o.type === "pack") countPack++;
+
+        if (!o.payment || o.payment === "unpaid") {
+          unpaid += p;
+          unpaidCount++;
+        } else {
+          paid += p;
+          if (o.payment === "cash") cash += p;
+          if (o.payment === "check") check += p;
+          if (o.payment === "online") online += p;
+        }
+      });
+
+      document.getElementById("statCount").textContent = orders.length;
+      document.getElementById("statBreakdown").textContent = `${countTs} TS • ${countSw} SW • ${countPack} Pack(s)`;
+      document.getElementById("statTotal").textContent = `${total} €`;
+      document.getElementById("statPaid").textContent = `${paid} €`;
+      document.getElementById("statPaidDetail").textContent = `Esp: ${cash}€ • Chq: ${check}€ • Ligne: ${online}€`;
+      document.getElementById("statUnpaid").textContent = `${unpaid} €`;
+      document.getElementById("statUnpaidCount").textContent = `${unpaidCount} élève(s) en attente`;
+    }
+
+    function computeSupplierCounts() {
+      const tsMap = {};
+      const swMap = {};
+      tshirtSizes.forEach(s => tsMap[s] = 0);
+      sweatSizes.forEach(s => swMap[s] = 0);
+
+      let missingTs = 0;
+      let missingSw = 0;
+
+      orders.forEach(o => {
+        if (o.type === "tshirt" || o.type === "pack") {
+          if (o.tshirtSize) {
+            tsMap[o.tshirtSize] = (tsMap[o.tshirtSize] || 0) + 1;
+          } else {
+            missingTs++;
+          }
+        }
+        if (o.type === "sweat" || o.type === "pack") {
+          if (o.sweatSize) {
+            swMap[o.sweatSize] = (swMap[o.sweatSize] || 0) + 1;
+          } else {
+            missingSw++;
+          }
+        }
+      });
+
+      return { tsMap, swMap, missingTs, missingSw };
+    }
+
+    function renderSupplierRecap() {
+      const { tsMap, swMap, missingTs, missingSw } = computeSupplierCounts();
+      document.getElementById("printDate").textContent = "Bon de commande généré le " + new Date().toLocaleDateString("fr-FR");
+
+      const alertBox = document.getElementById("missingSizeAlert");
+      if (missingTs > 0 || missingSw > 0) {
+        alertBox.style.display = "block";
+        alertBox.textContent = `⚠️ Attention : ${missingTs} taille(s) de T-shirt et ${missingSw} taille(s) de Sweat ne sont pas encore renseignées dans le tableau ci-dessus.`;
+      } else {
+        alertBox.style.display = "none";
+      }
+
+      // Rendu tableau T-shirts
+      let totalTs = 0;
+      const tsRows = Object.entries(tsMap).map(([size, qty]) => {
+        totalTs += qty;
+        return `<tr class="${qty === 0 ? "zero-row" : ""}"><td>${escapeHtml(size)}</td><td>${qty}</td></tr>`;
+      }).join("");
+      document.getElementById("recapTshirtBody").innerHTML =
+        tsRows + `<tr class="total-row"><td>TOTAL T-SHIRTS</td><td>${totalTs}</td></tr>`;
+
+      // Rendu tableau Sweats
+      let totalSw = 0;
+      const swRows = Object.entries(swMap).map(([size, qty]) => {
+        totalSw += qty;
+        return `<tr class="${qty === 0 ? "zero-row" : ""}"><td>${escapeHtml(size)}</td><td>${qty}</td></tr>`;
+      }).join("");
+      document.getElementById("recapSweatBody").innerHTML =
+        swRows + `<tr class="total-row"><td>TOTAL SWEATS</td><td>${totalSw}</td></tr>`;
+    }
+
+    // =========================================================
+    // 6. EXPORTS CSV (FOURNISSEUR ÉPURÉ & SUIVI ÉLÈVES)
+    // =========================================================
+    function downloadSupplierCSV() {
+      const { tsMap, swMap } = computeSupplierCounts();
+      const lines = ["Produit;Taille;Quantite"];
+      let totalTs = 0, totalSw = 0;
+
+      Object.entries(tsMap).forEach(([size, qty]) => {
+        if (qty > 0) {
+          lines.push(`T-shirt;${size};${qty}`);
+          totalTs += qty;
+        }
+      });
+      lines.push(`TOTAL T-SHIRTS;;${totalTs}`);
+      lines.push(";;");
+
+      Object.entries(swMap).forEach(([size, qty]) => {
+        if (qty > 0) {
+          lines.push(`Sweat;${size};${qty}`);
+          totalSw += qty;
+        }
+      });
+      lines.push(`TOTAL SWEATS;;${totalSw}`);
+
+      const dateStr = new Date().toISOString().slice(0, 10);
+      triggerCSVDownload(lines.join("\n"), `bon_commande_fournisseur_${dateStr}.csv`);
+    }
+
+    function exportFullCSV() {
+      const labelsType = { tshirt: "T-shirt seul", sweat: "Sweat seul", pack: "Pack T-shirt + Sweat" };
+      const labelsPay = { unpaid: "À régler", cash: "Espèces", check: "Chèque", online: "En ligne" };
+
+      const lines = ["N°;Élève;Classe;Formule;Taille T-shirt;Taille Sweat;Prix (€);Règlement"];
+      orders.forEach((o, i) => {
+        lines.push([
+          i + 1,
+          `"${(o.student || "").replace(/"/g, '""')}"`,
+          `"${(o.studentClass || "").replace(/"/g, '""')}"`,
+          labelsType[o.type] || o.type,
+          o.tshirtSize || "-",
+          o.sweatSize || "-",
+          PRICES[o.type] || 0,
+          labelsPay[o.payment] || "À régler"
+        ].join(";"));
+      });
+
+      const dateStr = new Date().toISOString().slice(0, 10);
+      triggerCSVDownload(lines.join("\n"), `suivi_commandes_eleves_${dateStr}.csv`);
+    }
+
+    function triggerCSVDownload(csvContent, filename) {
+      const blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+  </script>
+</body>
+</html>
